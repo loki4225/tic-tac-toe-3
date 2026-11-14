@@ -37,7 +37,8 @@ object GameEngine {
     fun legalMoves(state: GameState, from: Int): List<Int> {
         if (state.phase != GamePhase.MOVEMENT || state.winner != null || state.draw) return emptyList()
         if (from !in 0..8 || state.board[from] != state.currentPlayer) return emptyList()
-        // Any empty cell is a valid destination; pieces are not restricted by adjacency.\n        return state.board.indices.filter { state.board[it] == null }
+        // Any empty cell is a valid destination; pieces are not restricted by adjacency.
+        return state.board.indices.filter { state.board[it] == null }
     }
 
     fun hasAnyLegalMove(state: GameState, player: Player = state.currentPlayer): Boolean {
