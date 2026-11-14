@@ -54,10 +54,10 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
                 if (piece == current.currentPlayer) _selectedCell.value = index
             } else {
                 val from = _selectedCell.value!!
-                if (piece == current.currentPlayer) selectedCell = index
+                if (piece == current.currentPlayer) _selectedCell.value = index
                 else if (index in GameEngine.legalMoves(current, from)) {
                     _state.value = GameEngine.move(current, from, index)
-                    selectedCell = null
+                    _selectedCell.value = null
                     afterTurn()
                 } else if (piece == null) {
                     selectedCell = null
