@@ -29,18 +29,6 @@ object GameEngine {
         listOf(0, 4, 8), listOf(2, 4, 6)
     )
 
-    private val neighbours = (0..8).associateWith { index ->
-        val row = index / 3
-        val col = index % 3
-        (0..8).filter { other ->
-            if (other == index) false else {
-                val dr = kotlin.math.abs(other / 3 - row)
-                val dc = kotlin.math.abs(other % 3 - col)
-                dr <= 1 && dc <= 1
-            }
-        }
-    }
-
     fun winner(board: List<Player?>): Player? = winningLines.firstNotNullOfOrNull { line ->
         val p = board[line[0]]
         if (p != null && line.all { board[it] == p }) p else null
@@ -49,13 +37,13 @@ object GameEngine {
     fun legalMoves(state: GameState, from: Int): List<Int> {
         if (state.phase != GamePhase.MOVEMENT || state.winner != null || state.draw) return emptyList()
         if (from !in 0..8 || state.board[from] != state.currentPlayer) return emptyList()
-        return neighbours[from].orEmpty().filter { state.board[it] == null }
+        // Any empty cell is a valid destination; pieces are not restricted by adjacency.\n        return state.board.indices.filter { state.board[it] == null }
     }
 
     fun hasAnyLegalMove(state: GameState, player: Player = state.currentPlayer): Boolean {
         if (state.phase != GamePhase.MOVEMENT) return true
         return state.board.indices.any { index ->
-            state.board[index] == player && neighbours[index].orEmpty().any { state.board[it] == null }
+            state.board[index] == player && state.board.indices.any { state.board[it] == null }
         }
     }
 
