@@ -60,7 +60,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
                     _selectedCell.value = null
                     afterTurn()
                 } else if (piece == null) {
-                    selectedCell = null
+                    _selectedCell.value = null
                 } else selectedCell = null
             }
         }
