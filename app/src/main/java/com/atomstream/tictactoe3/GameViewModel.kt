@@ -25,7 +25,8 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     val difficulty: StateFlow<AiDifficulty> = _difficulty.asStateFlow()
     private val _stats = MutableStateFlow(loadStats())
     val stats: StateFlow<ScoreStats> = _stats.asStateFlow()
-    private var selectedCell: Int? = null
+    private val _selectedCell = MutableStateFlow<Int?>(null)
+    val selectedCell: StateFlow<Int?> = _selectedCell.asStateFlow()
 
     fun setComputer(enabled: Boolean) {
         _againstComputer.value = enabled
@@ -36,7 +37,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     fun newGame() {
         _state.value = GameState()
-        selectedCell = null
+        _selectedCell.value = null
     }
 
     fun tapCell(index: Int) {
@@ -49,10 +50,10 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
             afterTurn()
         } else {
             val piece = current.board.getOrNull(index)
-            if (selectedCell == null) {
-                if (piece == current.currentPlayer) selectedCell = index
+            if (_selectedCell.value == null) {
+                if (piece == current.currentPlayer) _selectedCell.value = index
             } else {
-                val from = selectedCell!!
+                val from = _selectedCell.value!!
                 if (piece == current.currentPlayer) selectedCell = index
                 else if (index in GameEngine.legalMoves(current, from)) {
                     _state.value = GameEngine.move(current, from, index)
@@ -65,10 +66,10 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun isSelected(index: Int): Boolean = selectedCell == index
+    fun isSelected(index: Int): Boolean = _selectedCell.value == index
     fun validTargets(): Set<Int> {
         val s = _state.value
-        return selectedCell?.let { GameEngine.legalMoves(s, it).toSet() } ?: emptySet()
+        return _selectedCell.value?.let { GameEngine.legalMoves(s, it).toSet() } ?: emptySet()
     }
 
     private fun afterTurn() {
