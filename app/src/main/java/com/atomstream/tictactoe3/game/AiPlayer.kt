@@ -25,9 +25,9 @@ object AiPlayer {
         // Hard mode adds a shallow opponent-response search to the positional evaluation.
         return top.maxByOrNull { candidate ->
             val replyStates = legalReplies(candidate)
-            if (replyStates.isEmpty()) score(candidate, state.currentPlayer)
-            else score(candidate, state.currentPlayer) -
-                (replyStates.maxOfOrNull { score(it, state.currentPlayer.other()) } ?: 0) * 0.65
+            val worstReplyScore: Double =
+                replyStates.maxOfOrNull { score(it, state.currentPlayer.other()) } ?: 0.0
+            score(candidate, state.currentPlayer) - worstReplyScore * 0.65
         } ?: top.first()
     }
 
