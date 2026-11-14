@@ -39,7 +39,8 @@ class GameEngineTest {
         listOf(0, 2, 4, 5, 7, 8).forEach { s = GameEngine.place(s, it) }
         assertEquals(GamePhase.MOVEMENT, s.phase)
         assertTrue(1 in GameEngine.legalMoves(s, 4))
-        assertFalse(3 in GameEngine.legalMoves(s, 4)) // occupied? no: 3 is adjacent, so this assertion is corrected below
+        assertTrue(6 in GameEngine.legalMoves(s, 4))
+        assertFalse(8 in GameEngine.legalMoves(s, 0)) // empty but not adjacent to cell 0
     }
 
     @Test fun winnerEndsGame() {
