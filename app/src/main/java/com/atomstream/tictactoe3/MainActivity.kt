@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.atomstream.tictactoe3.game.AiDifficulty
 import com.atomstream.tictactoe3.game.GamePhase
@@ -69,7 +70,7 @@ private fun GameApp(vm: GameViewModel = viewModel()) {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 Column {
                     Text("TIC TAC TOE", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black, color = Color.White)
-                    Text("THREE-PIECE STRATEGY", style = MaterialTheme.typography.labelSmall, color = Muted, letterSpacing = androidx.compose.ui.unit.sp(2))
+                    Text("THREE-PIECE STRATEGY", style = MaterialTheme.typography.labelSmall, color = Muted, letterSpacing = 2.sp)
                 }
                 TextButton(onClick = { showRules = true }) { Text("HOW TO PLAY") }
             }
