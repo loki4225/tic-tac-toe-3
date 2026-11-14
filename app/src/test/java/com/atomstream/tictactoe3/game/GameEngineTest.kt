@@ -32,7 +32,7 @@ class GameEngineTest {
         }
     }
 
-    @Test fun movementIncludesAdjacentDiagonalAndRejectsNonAdjacent() {
+    @Test fun movementAllowsAnyEmptyCellIncludingNonAdjacent() {
         // Complete a placement without creating a line:
         // X: 0, 4, 7; O: 2, 3, 5
         var s = GameState()
@@ -40,7 +40,8 @@ class GameEngineTest {
         assertEquals(GamePhase.MOVEMENT, s.phase)
         assertTrue(1 in GameEngine.legalMoves(s, 4))
         assertTrue(6 in GameEngine.legalMoves(s, 4))
-        assertFalse(8 in GameEngine.legalMoves(s, 0)) // empty but not adjacent to cell 0
+        assertTrue(8 in GameEngine.legalMoves(s, 0)) // empty and non-adjacent is allowed
+        assertFalse(2 in GameEngine.legalMoves(s, 0)) // occupied cell is never a destination
     }
 
     @Test fun winnerEndsGame() {
