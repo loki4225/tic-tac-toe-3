@@ -29,8 +29,8 @@ import com.atomstream.tictactoe3.game.Player
 
 private val Navy = Color(0xFF101827)
 private val Panel = Color(0xFF1B2940)
-private val Blue = Color(0xFF54A6FF)
-private val Red = Color(0xFFFF6B78)
+private val Blue = Color(0xFF28B8FF)
+private val Red = Color(0xFFFF315F)
 private val Muted = Color(0xFF9AAAC0)
 
 class MainActivity : ComponentActivity() {
@@ -108,7 +108,7 @@ private fun GameApp(vm: GameViewModel = viewModel()) {
             Text(status, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = if (state.winner == Player.X) Blue else if (state.winner == Player.O) Red else Color.White)
             Text(
                 if (state.phase == GamePhase.PLACEMENT) "Place 3 pieces each on any empty cell"
-                else "Select your piece, then a glowing adjacent cell",
+                else "Select your piece, then any empty cell",
                 style = MaterialTheme.typography.bodySmall, color = Muted
             )
 
@@ -139,7 +139,7 @@ private fun GameApp(vm: GameViewModel = viewModel()) {
             onDismissRequest = { showRules = false },
             title = { Text("HOW TO PLAY") },
             text = {
-                Text("Each player has 3 pieces. First, take turns placing all six pieces on empty cells. Then take turns moving one piece to an adjacent empty cell. Adjacent includes horizontal, vertical and diagonal neighbours. No jumping. Make a straight line of three to win. Repeating a position three times is a draw; having no legal move means you lose.")
+                Text("Each player has 3 pieces. First, take turns placing all six pieces on empty cells. Then take turns moving one piece to any empty cell on the board. Movement is not restricted to adjacent cells. Make a straight line of three to win. Repeating a position three times is a draw; having no legal move means you lose.")
             },
             confirmButton = { TextButton(onClick = { showRules = false }) { Text("GOT IT") } }
         )
@@ -195,7 +195,7 @@ private fun Board(state: GameState, vm: GameViewModel) {
                         contentAlignment = Alignment.Center
                     ) {
                         if (player != null) {
-                            Text(player.name, color = tint, style = MaterialTheme.typography.displayMedium, fontWeight = FontWeight.Black)
+                            Text(player.name, color = tint, style = MaterialTheme.typography.displayMedium, fontSize = 68.sp, fontWeight = FontWeight.Black)
                         } else if (target) {
                             Box(Modifier.size(16.dp).clip(CircleShape).background(Color(0xFF65D6A4)))
                         } else {
