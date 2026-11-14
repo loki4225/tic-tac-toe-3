@@ -172,6 +172,7 @@ private fun PlayerCard(title: String, subtitle: String, active: Boolean, tint: C
 
 @Composable
 private fun Board(state: GameState, vm: GameViewModel) {
+    val selectedCell by vm.selectedCell.collectAsState()
     val targets = vm.validTargets()
     Column(
         Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(22.dp)).background(Panel).padding(10.dp),
@@ -182,7 +183,7 @@ private fun Board(state: GameState, vm: GameViewModel) {
                 for (col in 0..2) {
                     val index = row * 3 + col
                     val player = state.board[index]
-                    val selected = vm.isSelected(index)
+                    val selected = selectedCell == index
                     val target = index in targets
                     val tint = when (player) { Player.X -> Blue; Player.O -> Red; null -> Color(0xFF263750) }
                     val cellColor by animateColorAsState(if (selected) Color(0xFF355B82) else if (target) Color(0xFF294A43) else Color(0xFF142238), label = "cell")
