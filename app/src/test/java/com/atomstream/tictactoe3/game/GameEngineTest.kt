@@ -34,9 +34,9 @@ class GameEngineTest {
 
     @Test fun movementIncludesAdjacentDiagonalAndRejectsNonAdjacent() {
         // Complete a placement without creating a line:
-        // X: 0, 4, 7; O: 2, 5, 8
+        // X: 0, 4, 7; O: 2, 3, 5
         var s = GameState()
-        listOf(0, 2, 4, 5, 7, 8).forEach { s = GameEngine.place(s, it) }
+        listOf(0, 2, 4, 3, 7, 5).forEach { s = GameEngine.place(s, it) }
         assertEquals(GamePhase.MOVEMENT, s.phase)
         assertTrue(1 in GameEngine.legalMoves(s, 4))
         assertTrue(6 in GameEngine.legalMoves(s, 4))
